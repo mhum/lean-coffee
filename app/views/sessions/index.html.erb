@@ -1,0 +1,12 @@
+<div class="starter-template">
+<div class="page-header">
+	<h1>Lean Coffee Sessions</h1>
+</div>	
+<table>  
+  <% @sessions.each do |s| %>
+    <tr>
+      <td><%= link_to s.id, session_path(s) %></td>
+    </tr>
+  <% end %>
+</table>
+</div>

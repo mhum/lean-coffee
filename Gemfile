@@ -27,6 +27,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass', '~> 3.3.4'
 gem 'sprockets-rails', :require => 'sprockets/railtie'
 gem 'bootstrap-x-editable-rails'
+gem 'active_link_to'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
