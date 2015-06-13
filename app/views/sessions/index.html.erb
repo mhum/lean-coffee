@@ -5,7 +5,7 @@
 <table>  
   <% @sessions.each do |s| %>
     <tr>
-      <td><%= link_to s.id, session_path(s) %></td>
+      <td><%= s.id %>. <%= link_to s.title, session_path(s) %></td>
     </tr>
   <% end %>
 </table>
