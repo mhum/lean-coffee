@@ -1,25 +1,12 @@
 <div class="starter-template">
 	<div class="page-header">
-		<h1>Lean Coffee Session</h1>
+		
 	</div>
-	<div align="right" style="padding-bottom: 15px;">
-		<span id="countdown-clock" class="not-started"></span>
-		<button id="start-timer" class="btn btn-md countdown-btn" type="button">Start</button>
-		<button id="reset-timer" class="btn btn-md countdown-btn" type="button">Reset</button>
-	</div>
-	<div class="row drag-area">
-		<div class="col-md-4 to-discuss">
-			<h3>To Discuss</h3>
-		</div>
-		<div class="col-md-4">
-			<h3>Discussing</h3>
-		</div>
-		<div class="col-md-4">
-			<h3>Discussed</h3>
-		</div>
-	</div>
-	<div style="margin-top: 10px; margin-bottom: 10px">
-		<button id="add-topic" class="btn btn-md" type="button">Add Topic</button>
-		<button id="clear-topics" class="btn btn-md" type="button">Clear Topics</button>
+	<div class="jumbotron">
+	  <h1>Hello, world!</h1>
+	  <p>Welcome to lean coffee sessions! Choose from the options below to start a new
+	  sessions or view one that has already been created.</p>
+	  <%= link_to "Start Fresh", new_session_path, class: "btn btn-primary btn-lg" %>
+	  <%= link_to "View Existing", sessions_path, class: "btn btn-primary btn-lg" %>
 	</div>
 </div>
