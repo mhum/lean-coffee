@@ -1,5 +1,5 @@
 $(function() {
-	$("#add-topic").click(function () {
+  $(document).on('click', "#add-topic", function () {
     $(".to-discuss").append(
       $("<div>").load('/topic/new', function() {
         var topic = $(this);
@@ -24,7 +24,7 @@ $(function() {
     );
   });
 
-$("#clear-topics").click(function() {
+  $(document).on('click', "#clear-topics", function() {
       $( ".draggable" ).remove();
   });
 });

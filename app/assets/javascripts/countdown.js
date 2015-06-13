@@ -3,7 +3,7 @@ $(function() {
 		$(this).html(event.strftime('%M:%S'));
 	});
 
-	$("#start-timer").click(function () {
+	$(document).on('click', "#start-timer", function () {
         if ($('#countdown-clock').hasClass('not-started')) {
             start_countdown();
         } else if ($('#countdown-clock').hasClass('running')) {
@@ -13,7 +13,7 @@ $(function() {
         }
     });
 
-	$("#reset-timer").click(function () {
+	$(document).on('click', "#reset-timer", function () {
         //Restart clock
  		set_countdown();
         
