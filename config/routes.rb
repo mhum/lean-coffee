@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-resources :sessions
+	match "sessions/:session_id/topics/remove_all", to: "topics#remove_all", via: [:post], as: :remove_all_topics
+	resources :sessions do
+		resources :topics
+	end
 
-  get 'topic/new'
+	get 'welcome/index'
 
-  get 'welcome/index'
-
- root 'welcome#index'
+	root 'welcome#index'
 
 end

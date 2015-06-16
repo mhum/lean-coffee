@@ -1,3 +1,7 @@
+<script>
+	var session_id = '<%= @session.id %>'
+</script>
+
 <div class="starter-template">
 	<div class="page-header">
 		<h1><%= @session.title %></h1>
@@ -7,9 +11,12 @@
 		<button id="start-timer" class="btn btn-md countdown-btn" type="button">Start</button>
 		<button id="reset-timer" class="btn btn-md countdown-btn" type="button">Reset</button>
 	</div>
-	<div class="row drag-area">
+	<div class="row topic-area">
 		<div class="col-md-4 to-discuss">
 			<h3>To Discuss</h3>
+			<% @session.topics.each do |t| %>
+				<%= render file: "topics/show", :locals => { :topic => t } %>
+			<% end %>
 		</div>
 		<div class="col-md-4">
 			<h3>Discussing</h3>
@@ -20,6 +27,7 @@
 	</div>
 	<div style="margin-top: 10px; margin-bottom: 10px">
 		<button id="add-topic" class="btn btn-md" type="button">Add Topic</button>
-		<button id="clear-topics" class="btn btn-md" type="button">Clear Topics</button>
+		<%= button_to "Clear Topics", remove_all_topics_path(@session), remote: true, class: "btn btn-md", id: "clear-topics" %>
 	</div>
 </div>
+
