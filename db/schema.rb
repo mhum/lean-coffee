@@ -11,12 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150518105836) do
+ActiveRecord::Schema.define(version: 20150613051148) do
 
   create_table "sessions", force: :cascade do |t|
     t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "topics", force: :cascade do |t|
+    t.text     "description"
+    t.integer  "votes"
+    t.integer  "session_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "topics", ["session_id"], name: "index_topics_on_session_id"
 
 end

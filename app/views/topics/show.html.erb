@@ -1,4 +1,4 @@
-<div class="ui-widget-content draggable">
+<div class="ui-widget-content draggable topic" data-id="<%= topic.id %>">
 	<div class="btn-group btn-group-xs">
 		<button type="button" class="btn btn-default vote-up">
 			<span class="glyphicon glyphicon-thumbs-up"></span>
@@ -7,9 +7,9 @@
 			<span class="glyphicon glyphicon-thumbs-down"></span>
 		</button>
 		&nbsp;
-		<span class="badge votes">0</span>
+		<span class="badge votes"><%= topic.votes %></span>
 		</div>
 	<div>
-		<a href="#" class="editable">Enter description</a>
+		<a href="#" class="editable"><%= topic.description %></a>
 	</div>
 </div>

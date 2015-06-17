@@ -7,9 +7,12 @@
 		<button id="start-timer" class="btn btn-md countdown-btn" type="button">Start</button>
 		<button id="reset-timer" class="btn btn-md countdown-btn" type="button">Reset</button>
 	</div>
-	<div class="row drag-area">
+	<div class="row topic-area" data-id="<%= @session.id %>">
 		<div class="col-md-4 to-discuss">
 			<h3>To Discuss</h3>
+			<% @session.topics.each do |t| %>
+				<%= render file: "topics/show", :locals => { :topic => t } %>
+			<% end %>
 		</div>
 		<div class="col-md-4">
 			<h3>Discussing</h3>
@@ -19,7 +22,8 @@
 		</div>
 	</div>
 	<div style="margin-top: 10px; margin-bottom: 10px">
-		<button id="add-topic" class="btn btn-md" type="button">Add Topic</button>
-		<button id="clear-topics" class="btn btn-md" type="button">Clear Topics</button>
+		<button id="add-topic" class="btn btn-md btn-success" type="button">Add Topic</button>
+		<button id="clear-topics" class="btn btn-md btn-danger" type="button"> Clear Topics</button>
 	</div>
 </div>
+
