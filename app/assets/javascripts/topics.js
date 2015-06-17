@@ -9,7 +9,6 @@ $(function() {
 
   $("#clear-topics").click(removeTopics);
 
-
   $(".topic-area" ).on("click", ".vote-up", upVote);
   $(".topic-area" ).on("click", ".vote-down", downVote);
 
@@ -58,5 +57,17 @@ function addTopicListeners() {
     stack:       ".draggable"
   });
 
-  $(".editable").editable();
+  $(".editable").editable({
+    type: 'textarea',
+    title: 'Update Description',
+    pk: function() {
+      return $(this).closest(".topic").data("id");
+    },
+    url: function(params) {
+      var session_id = $(this).closest(".topic-area").data("id");
+
+      $.post( "/sessions/"+session_id+"/topics/"+params.pk+"/update_description",params);
+    },   
+    showbuttons: true
+  });
 }

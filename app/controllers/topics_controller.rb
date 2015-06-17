@@ -28,4 +28,12 @@ class TopicsController < ApplicationController
 		render :nothing => true
 
 	end
+
+	def update_description
+		topic = Topic.find(params[:topic_id])
+		topic.description = params[:value]
+		topic.save
+
+		render :nothing => true
+	end
 end
