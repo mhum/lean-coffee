@@ -1,7 +1,3 @@
-<script>
-	var session_id = '<%= @session.id %>'
-</script>
-
 <div class="starter-template">
 	<div class="page-header">
 		<h1><%= @session.title %></h1>
@@ -11,7 +7,7 @@
 		<button id="start-timer" class="btn btn-md countdown-btn" type="button">Start</button>
 		<button id="reset-timer" class="btn btn-md countdown-btn" type="button">Reset</button>
 	</div>
-	<div class="row topic-area">
+	<div class="row topic-area" data-id="<%= @session.id %>">
 		<div class="col-md-4 to-discuss">
 			<h3>To Discuss</h3>
 			<% @session.topics.each do |t| %>
@@ -27,7 +23,8 @@
 	</div>
 	<div style="margin-top: 10px; margin-bottom: 10px">
 		<button id="add-topic" class="btn btn-md" type="button">Add Topic</button>
-		<%= button_to "Clear Topics", remove_all_topics_path(@session), remote: true, class: "btn btn-md", id: "clear-topics" %>
+		<%= button_to "Clear Topics", remove_all_topics_path(@session), 
+			remote: true, class: "btn btn-md", id: "clear-topics" %>
 	</div>
 </div>
 
