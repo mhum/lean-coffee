@@ -1,12 +1,13 @@
 $(function() {
   $("#add-topic").click(function () {
+    var session_id = $(".topic-area").data("id");
+
     $(".to-discuss").append(
       $("<div>").load('/sessions/'+session_id+'/topics/new', addTopicListeners)
     );
   });
-  $("#clear-topics").click(function() {
-      $(".draggable" ).remove();
-  });
+
+  $("#clear-topics").click(removeTopics);
 
 
   $(".topic-area" ).on("click", ".vote-up", upVote);
@@ -41,6 +42,14 @@ function downVote() {
   $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/down_vote", function(data) {
       votes.text(votes_int - 1);
   });
+}
+
+function removeTopics() {
+  var session_id = $(".topic-area").data("id");
+
+  $.post( "/sessions/"+session_id+"/topics/remove_all", function(data) {
+      $(".draggable" ).remove();
+  }); 
 }
 
 function addTopicListeners() {

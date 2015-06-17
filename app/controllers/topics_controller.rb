@@ -8,6 +8,8 @@ class TopicsController < ApplicationController
 
 	def remove_all
 		session = Session.find(params[:session_id]).topics.destroy_all
+
+		render :nothing => true
 	end
 
 	def up_vote
