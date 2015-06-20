@@ -6,8 +6,14 @@ class TopicsController < ApplicationController
   
 	end
 
+	def destroy
+		Topic.find(params[:id]).destroy
+
+		render :nothing => true
+	end
+
 	def remove_all
-		session = Session.find(params[:session_id]).topics.destroy_all
+		Session.find(params[:session_id]).topics.destroy_all
 
 		render :nothing => true
 	end
