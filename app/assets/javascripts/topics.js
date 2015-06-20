@@ -11,6 +11,7 @@ $(function() {
 
   $(".topic-area" ).on("click", ".vote-up", upVote);
   $(".topic-area" ).on("click", ".vote-down", downVote);
+  $(".topic-area" ).on("click", ".topic-remove", removeTopic);
 
   addTopicListeners();
 });
@@ -43,11 +44,25 @@ function downVote() {
   });
 }
 
+function removeTopic() {
+  var topic = $(this).closest(".topic");
+  var session_id = topic.closest(".topic-area").data("id");
+  var topic_id = topic.data("id");
+
+  $.ajax({
+    url: "/sessions/"+session_id+"/topics/"+topic_id,
+    type: "DELETE",
+    success: function(result) {
+      topic.remove();
+    }
+  }); 
+}
+
 function removeTopics() {
   var session_id = $(".topic-area").data("id");
 
   $.post( "/sessions/"+session_id+"/topics/remove_all", function(data) {
-      $(".draggable" ).remove();
+      $(".topic" ).remove();
   }); 
 }
 

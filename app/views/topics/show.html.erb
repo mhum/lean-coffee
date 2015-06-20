@@ -6,9 +6,13 @@
 		<button type="button" class="btn btn-default vote-down">
 			<span class="glyphicon glyphicon-thumbs-down"></span>
 		</button>
-		&nbsp;
-		<span class="badge votes"><%= topic.votes %></span>
-		</div>
+	</div>
+	<span class="badge votes"><%= topic.votes %></span>
+	<div class="btn-group btn-group-xs">
+		<button type="button" class="btn btn-default topic-remove">
+			<span class="glyphicon glyphicon-remove" style="color:red"></span>
+		</button>
+	</div>
 	<div>
 		<a href="#" class="editable"><%= topic.description %></a>
 	</div>
