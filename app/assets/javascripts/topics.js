@@ -9,7 +9,7 @@ $(function() {
 
   $(".editable-session").editable({
     placement: 'bottom',
-    title: 'Update Description',
+    title: 'Update Title',
     pk: function() {
       return $(".topic-area").data("id");
     },
