@@ -7,6 +7,18 @@ $(function() {
     );
   });
 
+  $(".editable-session").editable({
+    placement: 'bottom',
+    title: 'Update Description',
+    pk: function() {
+      return $(".topic-area").data("id");
+    },
+    url: function(params) {
+      $.post( "/sessions/"+params.pk+"/update_title",params);
+    },   
+    showbuttons: true
+  });
+
   $("#clear-topics").click(removeTopics);
 
   $(".topic-area" ).on("click", ".vote-up", upVote);
@@ -72,7 +84,7 @@ function addTopicListeners() {
     stack:       ".draggable"
   });
 
-  $(".editable").editable({
+  $(".editable-topic").editable({
     type: 'textarea',
     title: 'Update Description',
     pk: function() {

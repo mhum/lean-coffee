@@ -14,4 +14,12 @@ class SessionsController < ApplicationController
 	def show
 		@session = Session.find(params[:id])
 	end
+
+	def update_title
+		session = Session.find(params[:session_id])
+		session.title = params[:value]
+		session.save
+
+		render :nothing => true
+	end
 end
