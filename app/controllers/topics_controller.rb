@@ -2,8 +2,8 @@ class TopicsController < ApplicationController
 	def new
 		@session = Session.find(params[:session_id])
 		topic = @session.topics.create(:votes => 0, :description => 'Enter description')
+		
 		render :file => "topics/show", :layout => false, :locals => {:topic => topic}
-  
 	end
 
 	def destroy
@@ -32,7 +32,6 @@ class TopicsController < ApplicationController
 		topic.save
 
 		render :nothing => true
-
 	end
 
 	def update_description
