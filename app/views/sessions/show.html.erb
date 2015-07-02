@@ -2,10 +2,15 @@
 	<div class="page-header">
 		<h1><a href="#" class="editable-session"><%= @session.title %></a></h1>
 	</div>
-	<div align="right" style="padding-bottom: 15px;">
-		<a id="countdown-clock" href="#" class="editable-clock not-started"></a>
-		<button id="start-timer" class="btn btn-md countdown-btn" type="button">Start</button>
-		<button id="reset-timer" class="btn btn-md countdown-btn" type="button">Reset</button>
+	<div style="padding-bottom: 10px;">
+		<div style="float: right;">
+			<button id="start-timer" class="btn btn-md countdown-btn" type="button">Start</button>
+			<button id="reset-timer" class="btn btn-md countdown-btn" type="button">Reset</button>
+		</div>
+		<div style="float: right; padding-right: 10px;">
+			<a id="countdown-clock" href="#" class="editable-clock not-started"></a>
+		</div>
+		 <br style="clear: right;" />
 	</div>
 	<div class="row topic-area" data-id="<%= @session.id %>">
 		<div class="col-md-4 to-discuss">

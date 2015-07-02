@@ -18,15 +18,16 @@
 body {
   padding-top: 50px;
 }
+
+.page-header {
+  margin: 5px 0 10px; 
+}
 .starter-template {
   text-align: center;
 }
 
 [class*="col-"] {
   padding-bottom: 15px;
-  /*padding-top: 15px;
-  background-color: #eee;
-  background-color: rgba(86,61,124,.15);*/
   border: 1px solid #ddd;
   min-height: 400px;
 }

@@ -1,4 +1,4 @@
-var minute_offset = 5; 
+var minuteOffset = 5; 
 
 $(function() { 
     //Set the clock and pause it so the time is visible
@@ -10,25 +10,17 @@ $(function() {
         title: 'Set Minutes',  
         mode: 'inline',
         showbuttons: true,
-        send: 'never'
+        send: 'never',
+        validate: validateTime
     });
 
-    $(".editable-clock").on('save', function(e,params) {
-        var newValue = params.newValue;
-        
-        var regex = /(\d{2}):(\d{2})/;
-        var timeArray = regex.exec(newValue); 
-        minute_offset = parseInt(timeArray[1]);
-        
-        var d = new Date();
-        d.setSeconds(d.getSeconds() + parseInt(timeArray[2]));
-        d.setMinutes(d.getMinutes() + parseInt(timeArray[1]));
-        setTime(d);
+    //Change timer
+    $(".editable-clock").on('save', changeTime);
 
-        $('#countdown-clock').countdown('pause');
-    });
-
+    //Click Start/Resume button
 	$("#start-timer").click(clickStart);
+
+    //Click reset button
 	$("#reset-timer").click(clickRestart);
 });
 
@@ -58,7 +50,7 @@ function clickRestart() {
 
 function setCountdown() {
 	var d = new Date();
-	d.setMinutes(d.getMinutes() + minute_offset);
+	d.setMinutes(d.getMinutes() + minuteOffset);
 	setTime(d);
 }
 
@@ -70,7 +62,7 @@ function startCountdown() {
     $("#start-timer").text('Pause');
     
     //Update state
-    $('#countdown-clock').removeClass('not-started')
+    $('#countdown-clock').removeClass('not-started');
     $('#countdown-clock').addClass('running');
 }
 
@@ -82,16 +74,15 @@ function pauseCountdown() {
     $("#start-timer").text('Resume');
    
     //Update state
-    $('#countdown-clock').removeClass('running')
+    $('#countdown-clock').removeClass('running');
     $('#countdown-clock').addClass('paused');
 }
 
 function resumeCountdown() {
     //Determine new end time
-    var time_left = $('#countdown-clock').text();
-    console.log($('#countdown-clock'))
+    var timeLeft = $('#countdown-clock').text();
     var regex = /(\d{2}):(\d{2})/;
-    var timeArray = regex.exec(time_left); 
+    var timeArray = regex.exec(timeLeft); 
     
     var d = new Date();
     d.setSeconds(d.getSeconds() + parseInt(timeArray[2]));
@@ -104,8 +95,44 @@ function resumeCountdown() {
     $("#start-timer").text('Pause');
     
     //Update state
-    $('#countdown-clock').removeClass('paused')
+    $('#countdown-clock').removeClass('paused');
     $('#countdown-clock').addClass('running');
+}
+
+function changeTime(e, params) {
+    //Reset statuses and buttons
+    if ($('#countdown-clock').hasClass('running')) {
+        $('#countdown-clock').removeClass('running');
+        $('#countdown-clock').addClass('not-started');
+        $("#start-timer").text('Start');
+    } else if ($('#countdown-clock').hasClass('paused')) {
+        $('#countdown-clock').removeClass('paused');
+        $('#countdown-clock').addClass('not-started');
+        $("#start-timer").text('Start');
+    }
+
+    var newValue = params.newValue;
+    
+    var regex = /(\d{2}):(\d{2})/;
+    var timeArray = regex.exec(newValue); 
+
+    minuteOffset = parseInt(timeArray[1]);
+    
+    var d = new Date();
+    d.setSeconds(d.getSeconds() + parseInt(timeArray[2]));
+    d.setMinutes(d.getMinutes() + parseInt(timeArray[1]));
+    setTime(d);
+
+    $('#countdown-clock').countdown('pause');
+}
+
+function validateTime (value) {
+    var regex = /(\d{2}):(\d{2})/;
+    var timeArray = regex.exec(value);
+
+    if (!timeArray) {
+        return "Time format must be: mm:ss";
+    }
 }
 
 function setTime(time){
