@@ -13,6 +13,20 @@ class SessionsController < ApplicationController
 
 	def show
 		@session = Session.find(params[:id])
+
+		@todiscuss  = []
+		@discussing = []
+		@discussed  = []
+		
+		@session.topics.each do |topic|
+			if topic.todiscuss?
+				@todiscuss.push(topic)
+			elsif topic.discussing?
+				@discussing.push(topic)
+			elsif topic.discussed?
+				@discussed.push(topic)
+			end
+		end
 	end
 
 	def update_title

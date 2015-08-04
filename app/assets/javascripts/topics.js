@@ -2,7 +2,7 @@ $(function() {
   $("#add-topic").click(function () {
     var session_id = $(".topic-area").data("id");
 
-    $(".to-discuss").append(
+    $(".todiscuss").append(
       $("<div>").load('/sessions/'+session_id+'/topics/new', addTopicListeners)
     );
   });
@@ -26,6 +26,7 @@ $(function() {
   $(".topic-area" ).on("click", ".topic-remove", removeTopic);
 
   addTopicListeners();
+  addAreaListeners();
 });
 
 function upVote() {
@@ -97,4 +98,31 @@ function addTopicListeners() {
     },   
     showbuttons: true
   });
+}
+
+function addAreaListeners() {
+  $(".todiscuss").droppable({
+    drop: function(event, ui) {
+      updateStage (event, ui, 'todiscuss')
+    }
+  });
+
+  $(".discussing").droppable({
+    drop: function(event, ui) {
+      updateStage (event, ui, 'discussing')
+    }
+  });
+
+  $(".discussed").droppable({
+    drop: function(event, ui) {
+      updateStage (event, ui, 'discussed')
+    }
+  });
+}
+
+function updateStage(event, ui, area) {
+  var topic_id = ui.draggable.data("id");
+  var session_id = ui.draggable.closest(".topic-area").data("id");
+  
+  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/update_stage",{'stage':area});
 }
