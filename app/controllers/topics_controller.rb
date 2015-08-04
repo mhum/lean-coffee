@@ -3,7 +3,8 @@ class TopicsController < ApplicationController
 		@session = Session.find(params[:session_id])
 		topic = @session.topics.create(:votes => 0, 
 									   :description => 'Enter description',
-									   :color => Topic.colors.keys.sample)
+									   :color => Topic.colors.keys.sample,
+									   :stage => "todiscuss")
 		
 		render :file => "topics/show", :layout => false, :locals => {:topic => topic}
 	end
@@ -40,6 +41,16 @@ class TopicsController < ApplicationController
 		topic = Topic.find(params[:topic_id])
 		topic.description = params[:value]
 		topic.save
+
+		render :nothing => true
+	end
+
+	def update_stage
+		topic = Topic.find(params[:topic_id])
+		if topic.stage != params[:stage]
+			topic.stage = params[:stage]
+			topic.save
+		end
 
 		render :nothing => true
 	end
