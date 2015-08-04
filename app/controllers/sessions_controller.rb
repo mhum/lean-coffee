@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
 		@todiscuss  = []
 		@discussing = []
 		@discussed  = []
-		
+
 		@session.topics.each do |topic|
 			if topic.todiscuss?
 				@todiscuss.push(topic)
@@ -27,6 +27,10 @@ class SessionsController < ApplicationController
 				@discussed.push(topic)
 			end
 		end
+
+		@todiscuss.sort! { |left, right| right.votes <=> left.votes }
+		@discussing.sort! { |left, right| right.votes <=> left.votes }
+		@discussed.sort! { |left, right| right.votes <=> left.votes }
 	end
 
 	def update_title
