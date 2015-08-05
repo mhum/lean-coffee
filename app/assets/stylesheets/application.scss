@@ -27,10 +27,17 @@ body {
   text-align: center;
 }
 
+.topic-area {
+    display: table;
+}
+
 [class*="col-"] {
   padding-bottom: 15px;
   border: 1px solid #ddd;
   min-height: 400px;
+  float: none;
+    display: table-cell;
+    vertical-align: top;
 }
 
 .todiscuss {
