@@ -40,16 +40,20 @@ body {
     vertical-align: top;
 }
 
-.todiscuss {
+.todiscuss, .discussed  {
   background: #F5F5F5;
+}
+
+.todiscuss-discussed-hover {
+  background: #D6D6D6;
 }
 
 .discussing {
   background: #FFFAFA;
 }
 
-.discussed {
-  background: #F5F5F5;
+.discussing-hover {
+  background: #FFD6D6;
 }
 
 .countdown-btn {

@@ -102,18 +102,21 @@ function addTopicListeners() {
 
 function addAreaListeners() {
   $(".todiscuss").droppable({
+    hoverClass: "todiscuss-discussed-hover",
     drop: function(event, ui) {
       updateStage (event, ui, 'todiscuss')
     }
   });
 
   $(".discussing").droppable({
+    hoverClass: "discussing-hover",
     drop: function(event, ui) {
       updateStage (event, ui, 'discussing')
     }
   });
 
   $(".discussed").droppable({
+    hoverClass: "todiscuss-discussed-hover",
     drop: function(event, ui) {
       updateStage (event, ui, 'discussed')
     }
