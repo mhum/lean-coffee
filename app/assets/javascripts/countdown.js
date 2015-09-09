@@ -1,4 +1,5 @@
 var minuteOffset = 5; 
+var secondOffset = 0;
 
 $(function() { 
     //Set the clock and pause it so the time is visible
@@ -15,7 +16,16 @@ $(function() {
     });
 
     //Change timer
-    $(".editable-clock").on('save', changeTime);
+    $(".editable-clock")
+        .on('save', changeTime)
+        .on('finish.countdown', function(event) {
+           
+           $('body').addClass('flash');
+           
+           setTimeout(function(){
+               $('body').removeClass('flash');
+            }, 10000);
+        });
 
     //Click Start/Resume button
 	$("#start-timer").click(clickStart);
@@ -46,10 +56,14 @@ function clickRestart() {
     
     //Update state
     $('#countdown-clock').addClass('not-started');
+
+    //Remove countdown flasher
+    $('body').removeClass('flash'); 
 }
 
 function setCountdown() {
 	var d = new Date();
+    d.setSeconds(d.getSeconds() + secondOffset);
 	d.setMinutes(d.getMinutes() + minuteOffset);
 	setTime(d);
 }
@@ -116,6 +130,7 @@ function changeTime(e, params) {
     var regex = /(\d{2}):(\d{2})/;
     var timeArray = regex.exec(newValue); 
 
+    secondOffset = parseInt(timeArray[2]);
     minuteOffset = parseInt(timeArray[1]);
     
     var d = new Date();
