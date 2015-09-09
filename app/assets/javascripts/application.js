@@ -17,4 +17,8 @@
 //= require bootstrap
 //= require bootstrap3-editable/bootstrap-editable
 //= require turbolinks
+//
+// Vendor Assets
+//= require jquery.countdown.min
+//= require jquery-dateFormat.min
 //= require_tree .
