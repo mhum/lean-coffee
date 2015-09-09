@@ -22,3 +22,5 @@
 //= require jquery.countdown.min
 //= require jquery-dateFormat.min
 //= require_tree .
+//= require websocket_rails/main
+

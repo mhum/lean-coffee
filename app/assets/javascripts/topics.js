@@ -1,10 +1,7 @@
 $(function() {
   $("#add-topic").click(function () {
     var session_id = $(".topic-area").data("id");
-
-    $(".todiscuss").append(
-      $("<div>").load('/sessions/'+session_id+'/topics/new', addTopicListeners)
-    );
+    $.get('/sessions/'+session_id+'/topics/new')
   });
 
   $(".editable-session").editable({

@@ -6,7 +6,10 @@ class TopicsController < ApplicationController
 									   :color => Topic.colors.keys.sample,
 									   :stage => "todiscuss")
 		
-		render :file => "topics/show", :layout => false, :locals => {:topic => topic}
+		WebsocketRails[:leanCoffee].trigger 'new_topic', 
+			render_to_string(:file => "topics/show", :layout => false, :locals => {:topic => topic})
+
+		render :nothing => true
 	end
 
 	def destroy
