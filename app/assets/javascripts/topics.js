@@ -71,9 +71,7 @@ function removeTopic() {
 function removeTopics() {
   var session_id = $(".topic-area").data("id");
 
-  $.post( "/sessions/"+session_id+"/topics/remove_all", function(data) {
-      $(".topic" ).remove();
-  }); 
+  $.post( "/sessions/"+session_id+"/topics/remove_all"); 
 }
 
 function addTopicListeners() {

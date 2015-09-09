@@ -6,7 +6,12 @@ $(function() {
 
   // New topic
   channel.bind('new_topic', function(data) {
-      $(".todiscuss").append(data);
-      addTopicListeners();
-    })
+    $(".todiscuss").append(data);
+    addTopicListeners();
+  })
+
+  // Remove all topics
+  channel.bind('remove_all_topics', function(data) {
+    $(".topic" ).remove();
+  })
 });

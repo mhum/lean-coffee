@@ -21,6 +21,8 @@ class TopicsController < ApplicationController
 	def remove_all
 		Session.find(params[:session_id]).topics.destroy_all
 
+		WebsocketRails[:leanCoffee].trigger 'remove_all_topics'
+
 		render :nothing => true
 	end
 
