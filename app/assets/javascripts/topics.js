@@ -1,10 +1,7 @@
 $(function() {
   $("#add-topic").click(function () {
     var session_id = $(".topic-area").data("id");
-
-    $(".todiscuss").append(
-      $("<div>").load('/sessions/'+session_id+'/topics/new', addTopicListeners)
-    );
+    $.get('/sessions/'+session_id+'/topics/new')
   });
 
   $(".editable-session").editable({
@@ -34,11 +31,7 @@ function upVote() {
   var session_id = topic.closest(".topic-area").data("id");
   var topic_id = topic.data("id");
 
-  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/up_vote", function(data) {
-      var votes = topic.find(".votes");
-      var votes_int = parseInt(votes.text());
-      votes.text(votes_int + 1);
-  });
+  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/up_vote");
 }
 
 function downVote() {
@@ -52,9 +45,7 @@ function downVote() {
     return
   }  
 
-  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/down_vote", function(data) {
-      votes.text(votes_int - 1);
-  });
+  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/down_vote");
 }
 
 function removeTopic() {
@@ -64,25 +55,35 @@ function removeTopic() {
 
   $.ajax({
     url: "/sessions/"+session_id+"/topics/"+topic_id,
-    type: "DELETE",
-    success: function(result) {
-      topic.remove();
-    }
+    type: "DELETE"
   }); 
 }
 
 function removeTopics() {
   var session_id = $(".topic-area").data("id");
 
-  $.post( "/sessions/"+session_id+"/topics/remove_all", function(data) {
-      $(".topic" ).remove();
-  }); 
+  $.post( "/sessions/"+session_id+"/topics/remove_all"); 
 }
 
 function addTopicListeners() {
   $(".topic").draggable({
     containment: ".topic-area",
-    stack:       ".draggable"
+    stack:       ".draggable",
+    start: function (event, ui) {
+      $(this).addClass('dragging');
+    },
+    drag: function (event, ui) {
+      var coord = $(this).position();
+      var topic = {
+        id: $(this).data("id"),
+        x: coord.left,
+        y: coord.top
+      }
+      dispatcher.trigger('move_topic', topic);
+    },
+    stop: function (event, ui) {
+      $(this).removeClass('dragging');
+    }
   });
 
   $(".editable-topic").editable({
@@ -126,6 +127,8 @@ function addAreaListeners() {
 function updateStage(event, ui, area) {
   var topic_id = ui.draggable.data("id");
   var session_id = ui.draggable.closest(".topic-area").data("id");
+  var coord = ui.position;  
   
-  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/update_stage",{'stage':area});
+  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/update_stage",
+    {'stage':area, 'x':coord.left, 'y':coord.top});
 }
