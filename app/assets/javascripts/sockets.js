@@ -19,4 +19,10 @@ $(function() {
   channel.bind('remove_all_topics', function(data) {
     $(".topic" ).remove();
   })
+
+  // Up/Down Vote
+  channel.bind('vote_topic', function(data) {
+    var topic = $(".topic" ).closest('[data-id='+data[0]+']')
+    topic.find(".votes").text(data[1]);
+  })
 });

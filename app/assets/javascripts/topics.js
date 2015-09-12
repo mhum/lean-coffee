@@ -31,11 +31,7 @@ function upVote() {
   var session_id = topic.closest(".topic-area").data("id");
   var topic_id = topic.data("id");
 
-  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/up_vote", function(data) {
-      var votes = topic.find(".votes");
-      var votes_int = parseInt(votes.text());
-      votes.text(votes_int + 1);
-  });
+  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/up_vote");
 }
 
 function downVote() {
@@ -49,9 +45,7 @@ function downVote() {
     return
   }  
 
-  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/down_vote", function(data) {
-      votes.text(votes_int - 1);
-  });
+  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/down_vote");
 }
 
 function removeTopic() {

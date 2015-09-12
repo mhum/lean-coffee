@@ -33,6 +33,8 @@ class TopicsController < ApplicationController
 		topic.votes += 1
 		topic.save
 
+		WebsocketRails[:leanCoffee].trigger 'vote_topic', [params[:topic_id], topic.votes]
+
 		render :nothing => true
 	end
 
@@ -40,6 +42,8 @@ class TopicsController < ApplicationController
 		topic = Topic.find(params[:topic_id])
 		topic.votes -= 1
 		topic.save
+
+		WebsocketRails[:leanCoffee].trigger 'vote_topic', [params[:topic_id], topic.votes]
 
 		render :nothing => true
 	end
