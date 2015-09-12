@@ -25,4 +25,12 @@ $(function() {
     var topic = $(".topic" ).closest('[data-id='+data[0]+']')
     topic.find(".votes").text(data[1]);
   })
+
+  // Update Topic Description
+  channel.bind('update_description_topic', function(data) {
+    $(".topic" )
+      .closest('[data-id='+data[0]+']')
+      .find('.editable-topic')
+      .editable('setValue', data[1], true);
+  })
 });

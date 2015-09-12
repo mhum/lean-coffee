@@ -53,6 +53,8 @@ class TopicsController < ApplicationController
 		topic.description = params[:value]
 		topic.save
 
+		WebsocketRails[:leanCoffee].trigger 'update_description_topic', [params[:topic_id], params[:value]]
+
 		render :nothing => true
 	end
 
