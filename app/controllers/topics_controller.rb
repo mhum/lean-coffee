@@ -15,6 +15,8 @@ class TopicsController < ApplicationController
 	def destroy
 		Topic.find(params[:id]).destroy
 
+		WebsocketRails[:leanCoffee].trigger 'remove_topic', params[:id]
+
 		render :nothing => true
 	end
 

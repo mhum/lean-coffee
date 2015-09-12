@@ -61,10 +61,7 @@ function removeTopic() {
 
   $.ajax({
     url: "/sessions/"+session_id+"/topics/"+topic_id,
-    type: "DELETE",
-    success: function(result) {
-      topic.remove();
-    }
+    type: "DELETE"
   }); 
 }
 

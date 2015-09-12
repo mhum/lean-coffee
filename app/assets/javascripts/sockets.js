@@ -10,6 +10,11 @@ $(function() {
     addTopicListeners();
   })
 
+  // Remove topic
+  channel.bind('remove_topic', function(data) {
+    $(".topic" ).closest('[data-id='+data+']').remove();
+  })
+
   // Remove all topics
   channel.bind('remove_all_topics', function(data) {
     $(".topic" ).remove();
