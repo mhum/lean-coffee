@@ -68,7 +68,22 @@ function removeTopics() {
 function addTopicListeners() {
   $(".topic").draggable({
     containment: ".topic-area",
-    stack:       ".draggable"
+    stack:       ".draggable",
+    start: function (event, ui) {
+      $(this).addClass('dragging');
+    },
+    drag: function (event, ui) {
+      var coord = $(this).position();
+      var topic = {
+        id: $(this).data("id"),
+        x: coord.left,
+        y: coord.top
+      }
+      dispatcher.trigger('move_topic', topic);
+    },
+    stop: function (event, ui) {
+      $(this).removeClass('dragging');
+    }
   });
 
   $(".editable-topic").editable({
@@ -112,6 +127,8 @@ function addAreaListeners() {
 function updateStage(event, ui, area) {
   var topic_id = ui.draggable.data("id");
   var session_id = ui.draggable.closest(".topic-area").data("id");
+  var coord = ui.position;  
   
-  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/update_stage",{'stage':area});
+  $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/update_stage",
+    {'stage':area, 'x':coord.left, 'y':coord.top});
 }

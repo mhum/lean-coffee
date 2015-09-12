@@ -60,10 +60,11 @@ class TopicsController < ApplicationController
 
 	def update_stage
 		topic = Topic.find(params[:topic_id])
-		if topic.stage != params[:stage]
-			topic.stage = params[:stage]
-			topic.save
-		end
+			
+		topic.stage   = params[:stage]
+		topic.stage_x = params[:x]
+		topic.stage_y = params[:y]
+		topic.save
 
 		render :nothing => true
 	end

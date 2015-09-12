@@ -1,8 +1,8 @@
 $(function() {
   // Instantiate a new WebSocketRails instance
-  var dispatcher = new WebSocketRails(window.location.host + '/websocket');
+  dispatcher = new WebSocketRails(window.location.host + '/websocket');
   // Subscribe to channel
-  var channel = dispatcher.subscribe('leanCoffee');
+  channel = dispatcher.subscribe('leanCoffee');
 
   // New topic
   channel.bind('new_topic', function(data) {
@@ -32,5 +32,16 @@ $(function() {
       .closest('[data-id='+data[0]+']')
       .find('.editable-topic')
       .editable('setValue', data[1], true);
+  })
+
+  // Drag topic
+  channel.bind('move_topic', function(data) {
+    var topic = $(".topic" ).closest('[data-id='+data.id+']')
+    if (!topic.hasClass('dragging')) {
+      topic.css({
+        left: data.x + "px",
+        top: data.y + "px"
+      });
+    }
   })
 });

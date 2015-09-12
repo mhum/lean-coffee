@@ -15,21 +15,15 @@
 	<div class="row topic-area" data-id="<%= @session.id %>">
 		<div class="col-md-4 todiscuss">
 			<h3>To Discuss</h3>
-			<% @todiscuss.each do |t| %>
-				<%= render file: "topics/show", :locals => { :topic => t } %>
-			<% end %>
+		<% @session.topics.each do |t| %>
+			<%= render file: "topics/show", :locals => { :topic => t } %>
+		<% end %>
 		</div>
 		<div class="col-md-4 discussing">
 			<h3>Discussing</h3>
-			<% @discussing.each do |t| %>
-				<%= render file: "topics/show", :locals => { :topic => t } %>
-			<% end %>
 		</div>
 		<div class="col-md-4 discussed">
 			<h3>Discussed</h3>
-			<% @discussed.each do |t| %>
-				<%= render file: "topics/show", :locals => { :topic => t } %>
-			<% end %>
 		</div>
 	</div>
 	<div style="margin-top: 10px; margin-bottom: 10px">
