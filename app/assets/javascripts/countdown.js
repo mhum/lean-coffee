@@ -4,9 +4,12 @@ $(function() {
     $.get( "/timer/"+session_id+"/status", function(data) {
         setTime(data.timer_end_time)
 
-        //Pause if not running
-        if (!data.timer_running) {
-            $('#countdown-clock').countdown('pause');
+        //Set correct buttons
+        updateTimerBtns(data.timer_status)
+
+        //Puase timer if needed
+        if (data.timer_status != 'start') {
+        	$('#countdown-clock').countdown('pause');
         }
     });
 
@@ -85,6 +88,7 @@ function updateTimerBtns(event) {
             $("#start-timer").text('Resume');
            
             //Update state
+            $('#countdown-clock').removeClass('not-started');
             $('#countdown-clock').removeClass('running');
             $('#countdown-clock').addClass('paused');
             break;
