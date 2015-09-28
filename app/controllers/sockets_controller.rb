@@ -7,8 +7,7 @@ class SocketsController < WebsocketRails::BaseController
 
 	# Start countdown timer
 	def start_timer
-		puts 'START'
-
+		
 		# Determine end time
 		fin = (Time.now.to_f * 1000).to_i + Rails.cache.read('timer_start_seconds')
 		Rails.cache.write('timer_end_time',fin)
@@ -17,9 +16,10 @@ class SocketsController < WebsocketRails::BaseController
 		WebsocketRails[:leanCoffee].trigger(:start_timer, fin)
 	end
 
+	# Pause countdown timer
 	def pause_timer
-		puts 'PAUSE'
-
+		
+		# Determine end time
 		end_time = Rails.cache.read('timer_end_time')
 		time_left = end_time - (Time.now.to_f * 1000).to_i
 		Rails.cache.write('timer_seconds_left',time_left)
@@ -28,9 +28,9 @@ class SocketsController < WebsocketRails::BaseController
 		WebsocketRails[:leanCoffee].trigger(:pause_timer)
 	end
 
+	# Resume Countdown timer
 	def resume_timer
-		puts 'RESUME'
-
+		
 		# Determine new end time
 		fin = (Time.now.to_f * 1000).to_i + Rails.cache.read('timer_seconds_left')
 		Rails.cache.write('timer_end_time',fin)
@@ -42,9 +42,9 @@ class SocketsController < WebsocketRails::BaseController
 		WebsocketRails[:leanCoffee].trigger(:resume_timer, fin)
 	end
 
+	# Reset Countdown Timer
 	def reset_timer
-		puts 'RESET'
-
+		
 		# Determine end time
 		fin = (Time.now.to_f * 1000).to_i + Rails.cache.read('timer_start_seconds')
 		Rails.cache.write('timer_end_time',fin)

@@ -1,7 +1,7 @@
 $(function() { 
     //Get timer information and set time left
-    $.get( "/timer/status", function(data) {
-        console.log(data)
+    var session_id = $(".topic-area").data("id");
+    $.get( "/timer/"+session_id+"/status", function(data) {
         setTime(data.timer_end_time)
 
         //Pause if not running
@@ -17,7 +17,8 @@ $(function() {
         showbuttons: true,
         send: 'never',
         validate: validateTime,
-        value: '00:00'
+        value: '00:00',
+        unsavedclass: ''
     });
 
     //Change timer
@@ -110,31 +111,10 @@ function updateTimerBtns(event) {
 }
 
 function changeTime(e, params) {
-    //Reset statuses and buttons
-    if ($('#countdown-clock').hasClass('running')) {
-        $('#countdown-clock').removeClass('running');
-        $('#countdown-clock').addClass('not-started');
-        $("#start-timer").text('Start');
-    } else if ($('#countdown-clock').hasClass('paused')) {
-        $('#countdown-clock').removeClass('paused');
-        $('#countdown-clock').addClass('not-started');
-        $("#start-timer").text('Start');
-    }
-
     var newValue = params.newValue;
+    var session_id = $(".topic-area").data("id");
+    $.post( "/timer/"+session_id+"/update", {'time':newValue});
     
-    var regex = /(\d{2}):(\d{2})/;
-    var timeArray = regex.exec(newValue); 
-
-    secondOffset = parseInt(timeArray[2]);
-    minuteOffset = parseInt(timeArray[1]);
-    
-    var d = new Date();
-    d.setSeconds(d.getSeconds() + parseInt(timeArray[2]));
-    d.setMinutes(d.getMinutes() + parseInt(timeArray[1]));
-    setTime(d);
-
-    $('#countdown-clock').countdown('pause');
 }
 
 function validateTime (value) {
