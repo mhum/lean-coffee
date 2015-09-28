@@ -44,4 +44,41 @@ $(function() {
       });
     }
   })
+
+  // Update Timer
+  channel.bind('start_timer', function(data) {
+    $('#countdown-clock').countdown(data, function(event) {
+        $('#countdown-clock').html(event.strftime('%M:%S'));
+    });
+
+    updateTimerBtns('start');
+  })
+
+  // Pause Timer
+  channel.bind('pause_timer', function(data) {
+    $('#countdown-clock').countdown('pause');
+    
+    updateTimerBtns('pause');
+  })
+
+  // Resume Timer
+  channel.bind('resume_timer', function(data) {
+    $('#countdown-clock').countdown(data, function(event) {
+        $('#countdown-clock').html(event.strftime('%M:%S'));
+    });
+
+    updateTimerBtns('resume');
+  })
+
+  // Reset Timer
+  channel.bind('reset_timer', function(data) {
+    $('#countdown-clock').countdown(data, function(event) {
+        $('#countdown-clock').html(event.strftime('%M:%S'));
+    });
+
+    $('#countdown-clock').countdown('pause');
+
+    updateTimerBtns('reset');
+  })
+
 });
