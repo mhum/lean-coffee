@@ -20,28 +20,22 @@ body {
 }
 
 .page-header {
-  margin: 5px 0 10px; 
+  margin: 5px 0 10px;
 }
 
 .right .github-fork-ribbon {
   background-color: #333;
-} 
+}
 
 .starter-template {
   text-align: center;
-}
-
-.topic-area {
-    display: table;
 }
 
 [class*="col-"] {
   padding-bottom: 15px;
   border: 1px solid #ddd;
   min-height: 400px;
-  float: none;
-    display: table-cell;
-    vertical-align: top;
+  vertical-align: top;
 }
 
 .todiscuss, .discussed  {
@@ -64,7 +58,7 @@ body {
   width:75px;
 }
 
-.topic { 
+.topic {
   text-decoration:none;
   color:#000;
   display:block;
