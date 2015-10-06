@@ -1,4 +1,5 @@
 class TimerController < ApplicationController
+	# Return status of timer
 	def status
 		timer_end_time = Rails.cache.read('timer_end_time')
 		timer_seconds_left = Rails.cache.read('timer_seconds_left')
@@ -13,17 +14,72 @@ class TimerController < ApplicationController
 			timer_status = 'reset'
 		end
 
-		# if (timer_end_time > (Time.now.to_f * 1000).to_i)
-		# 	timer_status = 'running'
-		# else
-		# 	additional_time = timer_seconds_left != 0 ? timer_seconds_left : Rails.cache.read('timer_start_seconds')
-		# 	puts 'timer_seconds_left: '+timer_seconds_left.to_s
-		# 	puts 'timer_start_seconds: '+Rails.cache.read('timer_start_seconds').to_s
-		# 	timer_end_time = (Time.now.to_f * 1000).to_i + additional_time
-		# end
 		status = {timer_status:   timer_status,
 				  timer_end_time: timer_end_time}
 		render json: status
+	end
+
+	# Start countdown timer
+	def start
+		
+		# Determine end time
+		fin = (Time.now.to_f * 1000).to_i + Rails.cache.read('timer_start_seconds')
+		Rails.cache.write('timer_end_time',fin)
+		Rails.cache.write('timer_status','start')
+
+		# Broadcast end time
+		WebsocketRails[(params[:session_id]).to_sym].trigger(:start_timer, fin)
+
+		render :nothing => true
+	end
+
+	# Pause countdown timer
+	def pause
+		
+		# Determine end time
+		end_time = Rails.cache.read('timer_end_time')
+		time_left = end_time - (Time.now.to_f * 1000).to_i
+		Rails.cache.write('timer_seconds_left',time_left)
+		Rails.cache.write('timer_status','pause')
+
+		# Broadcast pause event
+		WebsocketRails[(params[:session_id]).to_sym].trigger(:pause_timer)
+
+		render :nothing => true
+	end
+
+	# Resume Countdown timer
+	def resume
+		
+		# Determine new end time
+		fin = (Time.now.to_f * 1000).to_i + Rails.cache.read('timer_seconds_left')
+		Rails.cache.write('timer_end_time',fin)
+		Rails.cache.write('timer_status','start')
+
+		# Reset time left
+		Rails.cache.write('timer_seconds_left',0)
+
+		# Broadcast end time
+		WebsocketRails[(params[:session_id]).to_sym].trigger(:resume_timer, fin)
+
+		render :nothing => true
+	end
+
+	# Reset Countdown Timer
+	def reset
+		
+		# Determine end time
+		fin = (Time.now.to_f * 1000).to_i + Rails.cache.read('timer_start_seconds')
+		Rails.cache.write('timer_end_time',fin)
+		Rails.cache.write('timer_status','reset')
+
+		# Reset time left
+		Rails.cache.write('timer_seconds_left',0)
+
+		# Broadcast end time
+		WebsocketRails[(params[:session_id]).to_sym].trigger(:reset_timer, fin)
+
+		render :nothing => true
 	end
 
 	def update
@@ -39,7 +95,7 @@ class TimerController < ApplicationController
 		Rails.cache.write('timer_seconds_left',0)
 
 		# Broadcast end time
-		WebsocketRails[:leanCoffee].trigger(:reset_timer, fin)
+		WebsocketRails[params[:session_id]].trigger(:reset_timer, fin)
 
 		render :nothing => true
 	end

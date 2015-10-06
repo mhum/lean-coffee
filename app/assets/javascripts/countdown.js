@@ -54,22 +54,26 @@ function clickStart() {
 }
 
 function startCountdown() {
-    dispatcher.trigger('start_timer');
+	var session_id = $(".topic-area").data("id");
+	$.post( "/timer/"+session_id+"/start");
     updateTimerBtns('start');  
 }
 
 function pauseCountdown() {
-    dispatcher.trigger('pause_timer');
+    var session_id = $(".topic-area").data("id");
+	$.post( "/timer/"+session_id+"/pause");
     updateTimerBtns('pause');  
 }
 
 function resumeCountdown() {
-    dispatcher.trigger('resume_timer');
+    var session_id = $(".topic-area").data("id");
+	$.post( "/timer/"+session_id+"/resume");
     updateTimerBtns('resume'); 
 }
 
 function clickRestart() {
-    dispatcher.trigger('reset_timer');
+    var session_id = $(".topic-area").data("id");
+	$.post( "/timer/"+session_id+"/reset")
     updateTimerBtns('reset'); 
 }
 

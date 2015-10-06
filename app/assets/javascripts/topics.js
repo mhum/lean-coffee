@@ -12,7 +12,7 @@ $(function() {
     },
     url: function(params) {
       $.post( "/sessions/"+params.pk+"/update_title",params);
-    },   
+    },
     showbuttons: true
   });
 
@@ -43,7 +43,7 @@ function downVote() {
 
   if (votes_int - 1 < 0) {
     return
-  }  
+  }
 
   $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/down_vote");
 }
@@ -56,13 +56,13 @@ function removeTopic() {
   $.ajax({
     url: "/sessions/"+session_id+"/topics/"+topic_id,
     type: "DELETE"
-  }); 
+  });
 }
 
 function removeTopics() {
   var session_id = $(".topic-area").data("id");
 
-  $.post( "/sessions/"+session_id+"/topics/remove_all"); 
+  $.post( "/sessions/"+session_id+"/topics/remove_all");
 }
 
 function addTopicListeners() {
@@ -74,10 +74,12 @@ function addTopicListeners() {
     },
     drag: function (event, ui) {
       var coord = $(this).position();
+      var session_id = $(".topic-area").data("id");
       var topic = {
-        id: $(this).data("id"),
-        x: coord.left,
-        y: coord.top
+        id:      $(this).data("id"),
+        x:       coord.left,
+        y:       coord.top,
+        session: session_id
       }
       dispatcher.trigger('move_topic', topic);
     },
@@ -96,7 +98,7 @@ function addTopicListeners() {
       var session_id = $(this).closest(".topic-area").data("id");
 
       $.post( "/sessions/"+session_id+"/topics/"+params.pk+"/update_description",params);
-    },   
+    },
     showbuttons: true
   });
 }
@@ -127,8 +129,8 @@ function addAreaListeners() {
 function updateStage(event, ui, area) {
   var topic_id = ui.draggable.data("id");
   var session_id = ui.draggable.closest(".topic-area").data("id");
-  var coord = ui.position;  
-  
+  var coord = ui.position;
+
   $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/update_stage",
     {'stage':area, 'x':coord.left, 'y':coord.top});
 }

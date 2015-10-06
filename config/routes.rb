@@ -7,8 +7,12 @@ Rails.application.routes.draw do
 	
 	match "sessions/:session_id/update_title", to: "sessions#update_title", via: [:post]
 
-	match "timer/:session_id/status", to: "timer#status", via: [:get]
-	match "timer/:session_id/update", to: "timer#update", via: [:post]
+	match "timer/:session_id/status",  to: "timer#status", via: [:get]
+	match "timer/:session_id/start",   to: "timer#start",  via: [:post]
+	match "timer/:session_id/pause",   to: "timer#pause",  via: [:post]
+	match "timer/:session_id/resume",  to: "timer#resume", via: [:post]
+	match "timer/:session_id/reset",   to: "timer#reset",  via: [:post]
+	match "timer/:session_id/update",  to: "timer#update", via: [:post]
 	
 	resources :sessions do
 		resources :topics
