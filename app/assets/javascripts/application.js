@@ -17,10 +17,11 @@
 //= require bootstrap
 //= require bootstrap3-editable/bootstrap-editable
 //= require turbolinks
+//= require websocket_rails/main
 //
 // Vendor Assets
 //= require jquery.countdown.min
 //= require jquery-dateFormat.min
+//= require match-columns
 //= require_tree .
-//= require websocket_rails/main
 
