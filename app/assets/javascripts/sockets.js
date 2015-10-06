@@ -2,7 +2,7 @@ $(function() {
   // Instantiate a new WebSocketRails instance
   dispatcher = new WebSocketRails(window.location.host + '/websocket');
   // Subscribe to channel
-  channel = dispatcher.subscribe('leanCoffee');
+  channel = dispatcher.subscribe($(".topic-area").data("id").toString());
 
   // New topic
   channel.bind('new_topic', function(data) {
@@ -57,7 +57,7 @@ $(function() {
   // Pause Timer
   channel.bind('pause_timer', function(data) {
     $('#countdown-clock').countdown('pause');
-    
+
     updateTimerBtns('pause');
   })
 
