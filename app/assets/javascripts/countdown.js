@@ -1,21 +1,23 @@
-$(function() { 
+$(function() {
     //Get timer information and set time left
     var session_id = $(".topic-area").data("id");
-    $.get( "/timer/"+session_id+"/status", function(data) {
-        setTime(data.timer_end_time)
+    if (session_id) {
+        $.get( "/timer/"+session_id+"/status", function(data) {
+            setTime(data.timer_end_time)
 
-        //Set correct buttons
-        updateTimerBtns(data.timer_status)
+            //Set correct buttons
+            updateTimerBtns(data.timer_status)
 
-        //Puase timer if needed
-        if (data.timer_status != 'start') {
-        	$('#countdown-clock').countdown('pause');
-        }
-    });
+            //Puase timer if needed
+            if (data.timer_status != 'start') {
+            	$('#countdown-clock').countdown('pause');
+            }
+        });
+    }
 
     //Make clock editable
     $(".editable-clock").editable({
-        placement: 'left', 
+        placement: 'left',
         mode: 'inline',
         showbuttons: true,
         send: 'never',
@@ -28,9 +30,9 @@ $(function() {
     $(".editable-clock")
         .on('save', changeTime)
         .on('finish.countdown', function(event) {
-           
+
            $('body').addClass('flash');
-           
+
            setTimeout(function(){
                $('body').removeClass('flash');
             }, 10000);
@@ -45,7 +47,7 @@ $(function() {
 
 function clickStart() {
     if ($('#countdown-clock').hasClass('not-started')) {
-        startCountdown();       
+        startCountdown();
     } else if ($('#countdown-clock').hasClass('running')) {
         pauseCountdown();
     } else if ($('#countdown-clock').hasClass('paused')) {
@@ -56,25 +58,25 @@ function clickStart() {
 function startCountdown() {
 	var session_id = $(".topic-area").data("id");
 	$.post( "/timer/"+session_id+"/start");
-    updateTimerBtns('start');  
+    updateTimerBtns('start');
 }
 
 function pauseCountdown() {
     var session_id = $(".topic-area").data("id");
 	$.post( "/timer/"+session_id+"/pause");
-    updateTimerBtns('pause');  
+    updateTimerBtns('pause');
 }
 
 function resumeCountdown() {
     var session_id = $(".topic-area").data("id");
 	$.post( "/timer/"+session_id+"/resume");
-    updateTimerBtns('resume'); 
+    updateTimerBtns('resume');
 }
 
 function clickRestart() {
     var session_id = $(".topic-area").data("id");
 	$.post( "/timer/"+session_id+"/reset")
-    updateTimerBtns('reset'); 
+    updateTimerBtns('reset');
 }
 
 function updateTimerBtns(event) {
@@ -82,15 +84,15 @@ function updateTimerBtns(event) {
         case 'start':
             //Update text
             $("#start-timer").text('Pause');
-            
+
             //Update state
             $('#countdown-clock').removeClass('not-started');
             $('#countdown-clock').addClass('running');
             break;
-        case 'pause':   
+        case 'pause':
             //Update text
             $("#start-timer").text('Resume');
-           
+
             //Update state
             $('#countdown-clock').removeClass('not-started');
             $('#countdown-clock').removeClass('running');
@@ -99,7 +101,7 @@ function updateTimerBtns(event) {
         case 'resume':
             //Update text
             $("#start-timer").text('Pause');
-            
+
             //Update state
             $('#countdown-clock').removeClass('paused');
             $('#countdown-clock').addClass('running');
@@ -107,14 +109,14 @@ function updateTimerBtns(event) {
         case 'reset':
             //Update Text
             $("#start-timer").text('Start');
-            
+
             //Update state
             $('#countdown-clock').addClass('not-started');
             $('#countdown-clock').removeClass('running');
             $('#countdown-clock').removeClass('paused');
 
             //Remove countdown flasher
-            $('body').removeClass('flash'); 
+            $('body').removeClass('flash');
     }
 }
 
@@ -122,7 +124,7 @@ function changeTime(e, params) {
     var newValue = params.newValue;
     var session_id = $(".topic-area").data("id");
     $.post( "/timer/"+session_id+"/update", {'time':newValue});
-    
+
 }
 
 function validateTime (value) {
