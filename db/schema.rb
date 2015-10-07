@@ -11,13 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150912031059) do
+ActiveRecord::Schema.define(version: 20151007094344) do
 
   create_table "sessions", force: :cascade do |t|
     t.string   "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "timers", force: :cascade do |t|
+    t.integer "timer_start_seconds", limit: 8, default: 300000
+    t.integer "timer_end_time",      limit: 8, default: 1
+    t.integer "timer_seconds_left",  limit: 8, default: 0
+    t.string  "timer_status",                  default: "reset"
+    t.integer "session_id"
+  end
+
+  add_index "timers", ["session_id"], name: "index_timers_on_session_id"
 
   create_table "topics", force: :cascade do |t|
     t.text     "description"
