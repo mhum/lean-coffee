@@ -83,7 +83,11 @@ function updateTimerBtns(event) {
     switch(event) {
         case 'start':
             //Update text
-            $("#start-timer").text('Pause');
+            $("#start-timer span.text").text('Pause');
+
+            //Update Icon
+            $("#start-timer span.glyphicon").removeClass('glyphicon-play');
+            $("#start-timer span.glyphicon").addClass('glyphicon-pause');
 
             //Update state
             $('#countdown-clock').removeClass('not-started');
@@ -91,7 +95,11 @@ function updateTimerBtns(event) {
             break;
         case 'pause':
             //Update text
-            $("#start-timer").text('Resume');
+            $("#start-timer span.text").text('Resume');
+
+            //Update Icon
+            $("#start-timer span.glyphicon").addClass('glyphicon-play');
+            $("#start-timer span.glyphicon").removeClass('glyphicon-pause');
 
             //Update state
             $('#countdown-clock').removeClass('not-started');
@@ -100,7 +108,11 @@ function updateTimerBtns(event) {
             break;
         case 'resume':
             //Update text
-            $("#start-timer").text('Pause');
+            $("#start-timer span.text").text('Pause');
+
+            //Update Icon
+            $("#start-timer span.glyphicon").removeClass('glyphicon-play');
+            $("#start-timer span.glyphicon").addClass('glyphicon-pause');
 
             //Update state
             $('#countdown-clock').removeClass('paused');
@@ -108,7 +120,11 @@ function updateTimerBtns(event) {
             break;
         case 'reset':
             //Update Text
-            $("#start-timer").text('Start');
+            $("#start-timer span.text").text('Start');
+
+            //Update Icon
+            $("#start-timer span.glyphicon").addClass('glyphicon-play');
+            $("#start-timer span.glyphicon").removeClass('glyphicon-pause');
 
             //Update state
             $('#countdown-clock').addClass('not-started');
