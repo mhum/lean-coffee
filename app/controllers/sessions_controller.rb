@@ -24,4 +24,12 @@ class SessionsController < ApplicationController
 
 		render :nothing => true
 	end
+
+	def destroy
+		Session.destroy(params[:id])
+
+		WebsocketRails[(params[:id]).to_sym].trigger 'delete_session'
+
+		render :nothing => true
+	end
 end

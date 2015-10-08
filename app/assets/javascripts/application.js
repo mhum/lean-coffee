@@ -23,5 +23,6 @@
 //= require jquery.countdown.min
 //= require jquery-dateFormat.min
 //= require match-columns
+//= require bootbox.min
 //= require_tree .
 
