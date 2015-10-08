@@ -3,9 +3,18 @@
 		<h1><a href="#" class="editable-session"><%= @session.title %></a></h1>
 	</div>
 	<div style="padding-bottom: 10px;">
+		<div style="float: left;">
+			<button id="add-topic" class="btn btn-md btn-success" type="button"> Add Topic </button>
+			<button id="clear-topics" class="btn btn-md btn-primary" type="button"> Clear Topics</button>
+			<button id="delete-session" class="btn btn-md btn-danger" type="button"> Delete Session</button>
+		</div>
 		<div style="float: right;">
-			<button id="start-timer" class="btn btn-md countdown-btn" type="button">Start</button>
-			<button id="reset-timer" class="btn btn-md countdown-btn" type="button">Reset</button>
+			<button id="start-timer" class="btn btn-md countdown-btn" type="button">
+				<span class="glyphicon glyphicon-play" aria-hidden="true"></span><span class="text">Start</span>
+			</button>
+			<button id="reset-timer" class="btn btn-md countdown-btn" type="button">
+				<span class="glyphicon glyphicon-repeat" aria-hidden="true"></span><span class="text">Reset</span>
+			</button>
 		</div>
 		<div style="float: right; padding-right: 10px;">
 			<a id="countdown-clock" href="#" class="editable-clock not-started"></a>
@@ -25,10 +34,6 @@
 		<div class="col-md-4 discussed">
 			<h3>Discussed</h3>
 		</div>
-	</div>
-	<div style="margin-top: 10px; margin-bottom: 10px">
-		<button id="add-topic" class="btn btn-md btn-success" type="button">Add Topic</button>
-		<button id="clear-topics" class="btn btn-md btn-danger" type="button"> Clear Topics</button>
 	</div>
 </div>
 
