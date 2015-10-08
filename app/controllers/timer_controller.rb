@@ -47,7 +47,7 @@ class TimerController < ApplicationController
 		end_time = timer[:timer_end_time]
 		time_left = end_time - (Time.now.to_f * 1000).to_i
 		timer[:timer_seconds_left] = time_left
-		timer[:timer_status] ='start'
+		timer[:timer_status] ='pause'
 		timer.save
 
 		# Broadcast pause event
