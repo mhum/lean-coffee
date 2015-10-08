@@ -22,6 +22,15 @@ $(function() {
       $(".topic" ).remove();
     })
 
+    // Delete session
+    channel.bind('delete_session', function(data) {
+      bootbox.alert({
+        size: 'small',
+        message: "Session has been deleted.",
+        callback: function(){ window.location.replace("/") }
+      })
+    })
+
     // Up/Down Vote
     channel.bind('vote_topic', function(data) {
       var topic = $(".topic" ).closest('[data-id='+data[0]+']')

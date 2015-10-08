@@ -17,7 +17,7 @@ $(function() {
   });
 
   $("#clear-topics").click(removeTopics);
-
+  $("#delete-session").click(deleteSession);
   $(".topic-area" ).on("click", ".vote-up", upVote);
   $(".topic-area" ).on("click", ".vote-down", downVote);
   $(".topic-area" ).on("click", ".topic-remove", removeTopic);
@@ -62,7 +62,38 @@ function removeTopic() {
 function removeTopics() {
   var session_id = $(".topic-area").data("id");
 
-  $.post( "/sessions/"+session_id+"/topics/remove_all");
+  var topics = $(".topic");
+
+  if (topics.length === 0) {
+    return
+  } else if (topics.length > 0) {
+    bootbox.confirm({
+      size:    'small',
+      message:  "Are you sure you wantt to delete all topics?",
+      callback: function(result) {
+        if (result)
+          $.post( "/sessions/"+session_id+"/topics/remove_all");
+      }
+    });
+  }
+}
+
+function deleteSession() {
+  var session_id = $(".topic-area").data("id");
+
+  var topics = $(".topic");
+
+  bootbox.confirm({
+    size:    'small',
+    message:  "Are you sure you wantt to delete this session?",
+    callback: function(result) {
+      if (result)
+        $.ajax({
+          url: "/sessions/"+session_id,
+          type: 'DELETE'
+        });
+    }
+  });
 }
 
 function addTopicListeners() {
