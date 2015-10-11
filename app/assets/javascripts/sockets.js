@@ -55,6 +55,8 @@ $(function() {
     channel.bind('move_topic', function(data) {
       var topic = $(".topic" ).closest('[data-id='+data.id+']')
       if (!topic.hasClass('dragging')) {
+        $(".topic" ).css('z-index','1');
+        topic.css('z-index','1000');
         topic.css({
           left: data.x + "px",
           top: data.y + "px"
