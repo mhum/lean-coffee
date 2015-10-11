@@ -6,6 +6,12 @@ $(function() {
     // Subscribe to channel
     channel = dispatcher.subscribe($(".topic-area").data("id").toString());
 
+    // Update Session Description
+    channel.bind('update_description_session', function(data) {
+      $('.editable-session')
+        .editable('setValue', data, true);
+    })
+
     // New topic
     channel.bind('new_topic', function(data) {
       $(".todiscuss").append(data);
