@@ -101,21 +101,31 @@ function addTopicListeners() {
     containment: ".topic-area",
     stack:       ".draggable",
     start: function (event, ui) {
-      $(this).addClass('dragging');
+      if ($(this).hasClass('dragging')) return false
+      var topic = {
+        id:      $(this).data("id"),
+        session: $(".topic-area").data("id")
+      }
+      dispatcher.trigger('move_topic_start', topic);
     },
     drag: function (event, ui) {
+      if ($(this).hasClass('dragging')) return false
       var coord = ui.position;
-      var session_id = $(".topic-area").data("id");
       var topic = {
         id:      $(this).data("id"),
         x:       coord.left,
         y:       coord.top,
-        session: session_id
+        session: $(".topic-area").data("id")
       }
       dispatcher.trigger('move_topic', topic);
     },
     stop: function (event, ui) {
-      $(this).removeClass('dragging');
+      if ($(this).hasClass('dragging')) return false
+      var topic = {
+        id:      $(this).data("id"),
+        session: $(".topic-area").data("id")
+      }
+      dispatcher.trigger('move_topic_stop', topic);
     }
   });
 

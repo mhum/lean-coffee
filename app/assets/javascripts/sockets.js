@@ -51,16 +51,33 @@ $(function() {
         .editable('setValue', data[1], true);
     })
 
+    // Drag topic start
+    channel.bind('move_topic_start', function(data) {
+      var topic = $(".topic" ).closest('[data-id='+data.id+']')
+      if (!topic.hasClass('ui-draggable-dragging')) {
+        topic.addClass('dragging');
+      }
+    })
+
     // Drag topic
     channel.bind('move_topic', function(data) {
       var topic = $(".topic" ).closest('[data-id='+data.id+']')
-      if (!topic.hasClass('dragging')) {
+      if (!topic.hasClass('ui-draggable-dragging')) {
         $(".topic" ).css('z-index','1');
-        topic.css('z-index','1000');
+        topic.addClass('dragging');
         topic.css({
           left: data.x + "px",
-          top: data.y + "px"
+          top: data.y + "px",
+          'z-index': 1000
         });
+      }
+    })
+
+    // Drag topic stop
+    channel.bind('move_topic_stop', function(data) {
+      var topic = $(".topic" ).closest('[data-id='+data.id+']')
+      if (!topic.hasClass('ui-draggable-dragging')) {
+        topic.removeClass('dragging');
       }
     })
 
