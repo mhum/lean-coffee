@@ -34,4 +34,31 @@ class SessionsController < ApplicationController
 
 		render :nothing => true
 	end
+
+	def remove_all
+		Session.find(params[:id]).topics.destroy_all
+
+		WebsocketRails[(params[:id]).to_sym].trigger 'remove_all_topics'
+
+		render :nothing => true
+	end
+
+	def new_from_existing
+		topics = Session.find(params[:id]).topics.where(:stage => 'todiscuss')
+
+		@session = Session.new
+		@session.title = Date.current.to_s(:month_day_and_year)
+		@session.save
+
+		topics.each { |t|
+			Topic.create(t.attributes.merge({
+				id: nil,
+				session: @session,
+				votes: 0
+			}))
+		}
+		@session.timers.create
+
+		redirect_to @session
+	end
 end
