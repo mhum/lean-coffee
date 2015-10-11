@@ -22,6 +22,8 @@ class SessionsController < ApplicationController
 		session.title = params[:value]
 		session.save
 
+		WebsocketRails[(params[:session_id]).to_sym].trigger 'update_description_session', params[:value]
+
 		render :nothing => true
 	end
 
