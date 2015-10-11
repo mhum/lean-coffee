@@ -20,14 +20,6 @@ class TopicsController < ApplicationController
 		render :nothing => true
 	end
 
-	def remove_all
-		Session.find(params[:session_id]).topics.destroy_all
-
-		WebsocketRails[(params[:session_id]).to_sym].trigger 'remove_all_topics'
-
-		render :nothing => true
-	end
-
 	def up_vote
 		topic = Topic.find(params[:topic_id])
 		topic.votes += 1
