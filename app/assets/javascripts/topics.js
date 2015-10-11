@@ -104,7 +104,7 @@ function addTopicListeners() {
       $(this).addClass('dragging');
     },
     drag: function (event, ui) {
-      var coord = $(this).position();
+      var coord = ui.position;
       var session_id = $(".topic-area").data("id");
       var topic = {
         id:      $(this).data("id"),
