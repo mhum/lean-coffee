@@ -32,6 +32,12 @@ class TopicsController < ApplicationController
 
 	def down_vote
 		topic = Topic.find(params[:topic_id])
+
+		if ( topic.votes - 1 < 0)
+			render :nothing => true
+			return
+		end
+
 		topic.votes -= 1
 		topic.save
 
