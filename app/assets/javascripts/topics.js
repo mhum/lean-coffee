@@ -28,6 +28,10 @@ function upVote() {
   var topic = $(this).closest(".topic");
   var session_id = topic.closest(".topic-area").data("id");
   var topic_id = topic.data("id");
+  var votes_remaining = $(".votes-remaining").text();
+
+  if (votes_remaining < 1)
+    return
 
   $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/up_vote",
     function(data){
@@ -41,6 +45,10 @@ function downVote() {
   var topic_id = topic.data("id");
   var votes = topic.find(".votes");
   var votes_int = parseInt(votes.text());
+  var votes_remaining = $(".votes-remaining").text();
+
+  if (votes_remaining > 1)
+    return
 
   if (votes_int - 1 < 0) {
     return

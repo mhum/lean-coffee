@@ -21,13 +21,22 @@ class TopicsController < ApplicationController
 	end
 
 	def up_vote
+		user_votes = session[:user]["sessions"]
+			.select { |s| s["id"] == params[:session_id].to_i }
+			.first["votes"]
+
+		if (user_votes < 1)
+			render :nothing => true
+			return
+		end
+
 		topic = Topic.find(params[:topic_id])
 		topic.votes += 1
 		topic.save
 
 		votes = session[:user]["sessions"]
-			.select { |s| s["id"] == params[:session_id].to_i }
-			.first["votes"] -= 1
+				.select { |s| s["id"] == params[:session_id].to_i }
+				.first["votes"] -= 1
 
 		WebsocketRails[(params[:session_id]).to_sym].trigger 'vote_topic', [params[:topic_id], topic.votes]
 
@@ -35,6 +44,15 @@ class TopicsController < ApplicationController
 	end
 
 	def down_vote
+		user_votes = session[:user]["sessions"]
+			.select { |s| s["id"] == params[:session_id].to_i }
+			.first["votes"]
+
+		if (user_votes > 1)
+			render :nothing => true
+			return
+		end
+
 		topic = Topic.find(params[:topic_id])
 
 		if ( topic.votes - 1 < 0)
