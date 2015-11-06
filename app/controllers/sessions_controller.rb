@@ -15,6 +15,18 @@ class SessionsController < ApplicationController
 
 	def show
 		@session = Session.find(params[:id])
+
+		if (session[:user])
+			session_info = session[:user]["sessions"].select { |s| s["id"] == @session.id.to_i }
+
+			if (!session_info.empty?)
+				@votes = session_info.first["votes"]
+			else
+				set_cookie
+			end
+		else
+			set_cookie
+		end
 	end
 
 	def update_title
@@ -60,5 +72,11 @@ class SessionsController < ApplicationController
 		@session.timers.create
 
 		redirect_to @session
+	end
+
+private
+	def set_cookie
+		session[:user] = {sessions: [{id:@session.id.to_i, votes:2}]}
+		@votes = 2
 	end
 end

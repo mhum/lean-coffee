@@ -25,9 +25,13 @@ class TopicsController < ApplicationController
 		topic.votes += 1
 		topic.save
 
+		votes = session[:user]["sessions"]
+			.select { |s| s["id"] == params[:session_id].to_i }
+			.first["votes"] -= 1
+
 		WebsocketRails[(params[:session_id]).to_sym].trigger 'vote_topic', [params[:topic_id], topic.votes]
 
-		render :nothing => true
+		render :json => {:votes => votes}
 	end
 
 	def down_vote
@@ -41,9 +45,13 @@ class TopicsController < ApplicationController
 		topic.votes -= 1
 		topic.save
 
+		votes = session[:user]["sessions"]
+			.select { |s| s["id"] == params[:session_id].to_i }
+			.first["votes"] += 1
+
 		WebsocketRails[(params[:session_id]).to_sym].trigger 'vote_topic', [params[:topic_id], topic.votes]
 
-		render :nothing => true
+		render :json => {:votes => votes}
 	end
 
 	def update_description
