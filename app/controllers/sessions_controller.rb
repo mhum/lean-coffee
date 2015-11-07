@@ -17,15 +17,17 @@ class SessionsController < ApplicationController
 		@session = Session.find(params[:id])
 
 		if (!session[:user])
-			session[:user] = {sessions: []}
+			session[:user] = {:uuid     => UUIDTools::UUID.random_create.to_s,
+							  :sessions => []}
 		end
 
-		session_info = session[:user]["sessions"].select { |s| s["id"] == @session.id.to_i }
+		session[:user].symbolize_keys!
+		session_info = session[:user][:sessions].select { |s| s["id"] == @session.id.to_i }
 
 		if (!session_info.empty?)
 			@votes = session_info.first["votes"]
 		else
-			session[:user]["sessions"].push({id:@session.id.to_i, votes:2})
+			session[:user][:sessions].push({id: @session.id.to_i, votes:2})
 			@votes = 2
 		end
 	end

@@ -1,5 +1,5 @@
-<div class="ui-widget-content draggable topic" 
-	 data-id="<%= topic.id %>" 
+<div class="ui-widget-content draggable topic"
+	 data-id="<%= topic.id %>"
 	 style="background:#<%= topic.color %>; left:<%= topic.stage_x %>px; top:<%= topic.stage_y %>px;">
 	<div class="btn-group btn-group-xs">
 		<button type="button" class="btn btn-default vote-up">
@@ -9,7 +9,7 @@
 			<span class="glyphicon glyphicon-thumbs-down"></span>
 		</button>
 	</div>
-	<span class="badge votes"><%= topic.votes %></span>
+	<span class="badge votes"><%= topic.votes.count %></span>
 	<div class="btn-group btn-group-xs">
 		<button type="button" class="btn btn-default topic-remove">
 			<span class="glyphicon glyphicon-remove" style="color:red"></span>

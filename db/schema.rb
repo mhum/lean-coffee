@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007094344) do
+ActiveRecord::Schema.define(version: 20151107012920) do
 
   create_table "sessions", force: :cascade do |t|
     t.string   "title"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 20151007094344) do
 
   create_table "topics", force: :cascade do |t|
     t.text     "description"
-    t.integer  "votes"
     t.integer  "session_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
@@ -42,5 +41,14 @@ ActiveRecord::Schema.define(version: 20151007094344) do
   end
 
   add_index "topics", ["session_id"], name: "index_topics_on_session_id"
+
+  create_table "votes", force: :cascade do |t|
+    t.text     "uuid"
+    t.integer  "topic_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "votes", ["topic_id"], name: "index_votes_on_topic_id"
 
 end
