@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151107012920) do
+ActiveRecord::Schema.define(version: 20151108010157) do
 
   create_table "sessions", force: :cascade do |t|
     t.string   "title"
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20151107012920) do
     t.integer  "stage"
     t.integer  "stage_x"
     t.integer  "stage_y"
+    t.integer  "votes_count"
   end
 
   add_index "topics", ["session_id"], name: "index_topics_on_session_id"
