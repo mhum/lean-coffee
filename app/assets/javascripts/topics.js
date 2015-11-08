@@ -44,14 +44,15 @@ function downVote() {
   var topic = $(this).closest(".topic");
   var session_id = topic.closest(".topic-area").data("id");
   var topic_id = topic.data("id");
-  var votes = topic.find(".votes");
-  var votes_int = parseInt(votes.text());
+  var votes = parseInt(topic.find(".total-votes").text());
   var votes_remaining = $(".votes-remaining").text();
+  var user_votes = parseInt(topic.find(".topic-votes").text());
 
-  if (votes_remaining > 1)
+  if (votes_remaining > 1) {
     return
-
-  if (votes_int - 1 < 0) {
+  } else if (votes - 1 < 0) {
+    return
+  } else if (user_votes < 1) {
     return
   }
 
