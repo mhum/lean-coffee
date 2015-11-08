@@ -65,7 +65,14 @@ class TopicsController < ApplicationController
 		end
 
 		topic = Topic.find(params[:topic_id])
-		topic.votes.where(uuid: session[:user][:uuid]).take.destroy
+		user_topic = topic.votes.where(uuid: session[:user][:uuid]).take
+
+		if (!user_topic)
+			render :nothing => true
+			return
+		end
+
+		user_topic.destroy
 		total_votes -= 1
 
 		WebsocketRails[(params[:session_id]).to_sym].trigger 'vote_topic', [params[:topic_id], total_votes]
