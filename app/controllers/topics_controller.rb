@@ -21,7 +21,8 @@ class TopicsController < ApplicationController
 	end
 
 	def up_vote
-		user_votes = session[:user]["sessions"]
+		session[:user].symbolize_keys!
+		user_votes = session[:user][:sessions]
 			.select { |s| s["id"] == params[:session_id].to_i }
 			.first["votes"]
 
@@ -31,20 +32,23 @@ class TopicsController < ApplicationController
 		end
 
 		topic = Topic.find(params[:topic_id])
-		topic.votes += 1
-		topic.save
+		topic.votes.create(:uuid => session[:user][:uuid])
 
-		votes = session[:user]["sessions"]
+		WebsocketRails[(params[:session_id]).to_sym].trigger 'vote_topic', [params[:topic_id], topic.votes.size]
+
+		user_votes = session[:user][:sessions]
 				.select { |s| s["id"] == params[:session_id].to_i }
 				.first["votes"] -= 1
 
-		WebsocketRails[(params[:session_id]).to_sym].trigger 'vote_topic', [params[:topic_id], topic.votes]
+		topic_votes = topic.votes.where(:uuid => session[:user][:uuid]).size
 
-		render :json => {:votes => votes}
+		render :json => {:user_votes  => user_votes,
+						 :topic_votes => topic_votes}
 	end
 
 	def down_vote
-		user_votes = session[:user]["sessions"]
+		session[:user].symbolize_keys!
+		user_votes = session[:user][:sessions]
 			.select { |s| s["id"] == params[:session_id].to_i }
 			.first["votes"]
 
@@ -53,23 +57,27 @@ class TopicsController < ApplicationController
 			return
 		end
 
-		topic = Topic.find(params[:topic_id])
+		total_votes = Topic.find(params[:topic_id]).votes.size
 
-		if ( topic.votes - 1 < 0)
-			render :nothing => true
+		if ( total_votes - 1 < 0)
+			render :json => {:votes => 0}
 			return
 		end
 
-		topic.votes -= 1
-		topic.save
+		topic = Topic.find(params[:topic_id])
+		topic.votes.where(uuid: session[:user][:uuid]).take.destroy
+		total_votes -= 1
 
-		votes = session[:user]["sessions"]
+		WebsocketRails[(params[:session_id]).to_sym].trigger 'vote_topic', [params[:topic_id], total_votes]
+
+		user_votes = session[:user][:sessions]
 			.select { |s| s["id"] == params[:session_id].to_i }
 			.first["votes"] += 1
 
-		WebsocketRails[(params[:session_id]).to_sym].trigger 'vote_topic', [params[:topic_id], topic.votes]
+		topic_votes = topic.votes.where(:uuid => session[:user][:uuid]).size
 
-		render :json => {:votes => votes}
+		render :json => {:user_votes  => user_votes,
+						 :topic_votes => topic_votes}
 	end
 
 	def update_description
