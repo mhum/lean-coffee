@@ -35,7 +35,8 @@ function upVote() {
 
   $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/up_vote",
     function(data){
-        $(".votes-remaining").text(data.votes)
+        $(".votes-remaining").text(data.user_votes);
+        $(".topic" ).closest('[data-id='+topic_id+']').find(".topic-votes").text(data.topic_votes);
     });
 }
 
@@ -56,7 +57,8 @@ function downVote() {
 
   $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/down_vote",
     function(data){
-        $(".votes-remaining").text(data.votes)
+        $(".votes-remaining").text(data.user_votes);
+        $(".topic" ).closest('[data-id='+topic_id+']').find(".topic-votes").text(data.topic_votes);
     });
 }
 

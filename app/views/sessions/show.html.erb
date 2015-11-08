@@ -44,9 +44,9 @@
 	<div class="row topic-area" data-id="<%= @session.id %>" data-match-columns=true>
 		<div class="col-md-4 todiscuss">
 			<h3>To Discuss</h3>
-		<% @session.topics.each do |t| %>
-			<%= render file: "topics/show", :locals => { :topic => t } %>
-		<% end %>
+			<% @session.topics.each do |t| %>
+				<%= render file: "topics/show", :locals => { :topic => t } %>
+			<% end %>
 		</div>
 		<div class="col-md-4 discussing">
 			<h3>Discussing</h3>

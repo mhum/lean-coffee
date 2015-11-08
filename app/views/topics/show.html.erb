@@ -1,19 +1,24 @@
 <div class="ui-widget-content draggable topic"
 	 data-id="<%= topic.id %>"
 	 style="background:#<%= topic.color %>; left:<%= topic.stage_x %>px; top:<%= topic.stage_y %>px;">
-	<div class="btn-group btn-group-xs">
-		<button type="button" class="btn btn-default vote-up">
-			<span class="glyphicon glyphicon-thumbs-up"></span>
-		</button>
-		<button type="button" class="btn btn-default vote-down">
-			<span class="glyphicon glyphicon-thumbs-down"></span>
-		</button>
+	<div>
+		<div class="btn-group btn-group-xs">
+			<button type="button" class="btn btn-default vote-up">
+				<span class="glyphicon glyphicon-thumbs-up"></span>
+			</button>
+			<button type="button" class="btn btn-default vote-down">
+				<span class="glyphicon glyphicon-thumbs-down"></span>
+			</button>
+		</div>
+		<div class="btn-group btn-group-xs">
+			<button type="button" class="btn btn-default topic-remove">
+				<span class="glyphicon glyphicon-remove" style="color:red"></span>
+			</button>
+		</div>
 	</div>
-	<span class="badge votes"><%= topic.votes.count %></span>
-	<div class="btn-group btn-group-xs">
-		<button type="button" class="btn btn-default topic-remove">
-			<span class="glyphicon glyphicon-remove" style="color:red"></span>
-		</button>
+	<div>
+		Total: <span class="badge total-votes"><%= topic.votes.size %></span>
+		Mine: <span class="badge topic-votes"><%= topic.votes.where(:uuid => session[:user][:uuid]).size %></span>
 	</div>
 	<div>
 		<a href="#" class="editable-topic"><%= topic.description %></a>

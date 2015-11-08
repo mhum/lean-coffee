@@ -40,7 +40,7 @@ $(function() {
     // Up/Down Vote
     channel.bind('vote_topic', function(data) {
       var topic = $(".topic" ).closest('[data-id='+data[0]+']')
-      topic.find(".votes").text(data[1]);
+      topic.find(".total-votes").text(data[1]);
     })
 
     // Update Topic Description
