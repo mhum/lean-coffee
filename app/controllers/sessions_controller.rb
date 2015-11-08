@@ -68,8 +68,7 @@ class SessionsController < ApplicationController
 		topics.each { |t|
 			Topic.create(t.attributes.merge({
 				id: nil,
-				session: @session,
-				votes: 0
+				session: @session
 			}))
 		}
 		@session.timers.create
