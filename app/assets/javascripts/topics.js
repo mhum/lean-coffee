@@ -1,4 +1,21 @@
 $(function() {
+  $.fn.spin.presets.huge = {
+    scale: 5
+  }
+
+  $.blockUI.defaults.message = null;
+  $.blockUI.defaults.overlayCSS.cursor = 'default';
+  $.blockUI.defaults.overlayCSS.opacity = 0.2;
+
+  $(document).on("page:fetch", function(){
+    $('body').block();
+    $('body').spin('huge');
+  });
+
+  $(document).on("page:receive", function(){
+    $('body').spin(false);
+    $('body').unblock();
+  });
 
   $("a.topic-option").click(function() {
    $("#topic-options").dropdown("toggle");
@@ -20,12 +37,24 @@ $(function() {
   $(".topic-area" ).on("click", ".vote-down", downVote);
   $(".topic-area" ).on("click", ".topic-remove", removeTopic);
 
+  $("#add-topic").click(function (event) {
+    $('body').block();
+    $('body').spin('huge');
+  });
+
+  $("#remove-topics").click(function (event) {
+
+  });
+
   addTopicListeners();
   addAreaListeners();
 });
 
 function upVote() {
   var topic = $(this).closest(".topic");
+
+  if (topic.data("loading")) return;
+
   var session_id = topic.closest(".topic-area").data("id");
   var topic_id = topic.data("id");
   var votes_remaining = $(".votes-remaining").text();
@@ -33,15 +62,20 @@ function upVote() {
   if (votes_remaining < 1)
     return
 
+  addLoading(topic);
   $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/up_vote",
     function(data){
         $(".votes-remaining").text(data.user_votes);
         $(".topic" ).closest('[data-id='+topic_id+']').find(".topic-votes").text(data.topic_votes);
+        removeLoading(topic);
     });
 }
 
 function downVote() {
   var topic = $(this).closest(".topic");
+
+  if (topic.data("loading")) return;
+
   var session_id = topic.closest(".topic-area").data("id");
   var topic_id = topic.data("id");
   var votes = parseInt(topic.find(".total-votes").text());
@@ -56,10 +90,12 @@ function downVote() {
     return
   }
 
+  addLoading(topic);
   $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/down_vote",
     function(data){
         $(".votes-remaining").text(data.user_votes);
         $(".topic" ).closest('[data-id='+topic_id+']').find(".topic-votes").text(data.topic_votes);
+        removeLoading(topic);
     });
 }
 
@@ -120,6 +156,9 @@ function addTopicListeners() {
     },
     showbuttons: true
   });
+
+  $('body').spin(false);
+  $('body').unblock();
 }
 
 function addAreaListeners() {
@@ -152,4 +191,14 @@ function updateStage(event, ui, area) {
 
   $.post( "/sessions/"+session_id+"/topics/"+topic_id+"/update_stage",
     {'stage':area, 'x':coord.left, 'y':coord.top});
+}
+
+function addLoading(el) {
+  el.block();
+  el.spin({'shadow':true});
+}
+
+function removeLoading(el) {
+  el.unblock();
+  el.spin(false);
 }
