@@ -21,6 +21,6 @@
 		Mine: <span class="badge topic-votes"><%= topic.votes.where(:uuid => session[:user][:uuid]).size %></span>
 	</div>
 	<div>
-		<a href="#" class="editable-topic"><%= topic.description %></a>
+		<a href="javascript:;" class="editable-topic"><%= topic.description %></a>
 	</div>
 </div>

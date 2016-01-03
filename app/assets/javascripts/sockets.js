@@ -26,6 +26,8 @@ $(function() {
     // Remove all topics
     channel.bind('remove_all_topics', function(data) {
       $(".topic" ).remove();
+      $('body').spin(false);
+      $('body').unblock();
     })
 
     // Delete session

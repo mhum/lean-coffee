@@ -24,6 +24,9 @@
 //= require jquery-dateFormat.min
 //= require match-columns
 //= require bootbox.min
+//= require spin.min
+//= require jquery.spin
+//= require jquery.blockUI.min
 //= require_tree .
 
 //Override the default confirm dialog by rails
@@ -48,6 +51,8 @@ $.rails.showConfirmationDialog = function(link){
       message:  message,
       callback: function(result) {
         if (result)
+          $('body').block();
+          $('body').spin('huge');
           $.rails.confirmed(link, message);
       }
     });
