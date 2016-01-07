@@ -1,0 +1,36 @@
+{
+  "name": "lean_coffee",
+  "version": "1.0.0",
+  "description": "Lean Coffee is a simple web application built with Ruby on Rails with the intention of being used for distributed [Lean Coffee](http://leancoffee.org) sessions.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mhum/lean-coffee.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mhum/lean-coffee/issues"
+  },
+  "homepage": "https://github.com/mhum/lean-coffee#readme",
+  "dependencies": {
+    "history": "^1.17.0",
+    "react": "^0.14.6",
+    "react-bootstrap": "^0.28.1",
+    "react-dom": "^0.14.6",
+    "react-router": "^1.0.3"
+  },
+  "devDependencies": {
+    "babel-core": "^6.3.26",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "webpack": "^1.12.9"
+  }
+}

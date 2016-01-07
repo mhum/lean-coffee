@@ -10,50 +10,33 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery.turbolinks
-//= require jquery_ujs
-//= require jquery-ui
-//= require bootstrap
-//= require bootstrap3-editable/bootstrap-editable
-//= require turbolinks
-//= require websocket_rails/main
+// = require bundle.js
 //
-// Vendor Assets
-//= require jquery.countdown.min
-//= require jquery-dateFormat.min
-//= require match-columns
-//= require bootbox.min
-//= require spin.min
-//= require jquery.spin
-//= require jquery.blockUI.min
-//= require_tree .
-
-//Override the default confirm dialog by rails
-$.rails.allowAction = function(link){
-  if (link.data("confirm") == undefined){
-    return true;
-  }
-  $.rails.showConfirmationDialog(link);
-  //return false;
-}
-//User click confirm button
-$.rails.confirmed = function(link, message){
-  link.data("confirm", null);
-  link.trigger("click.rails");
-  link.data("confirm", message);
-}
-//Display the confirmation dialog
-$.rails.showConfirmationDialog = function(link){
-  var message = link.data("confirm");
-  bootbox.confirm({
-      size:    'small',
-      message:  message,
-      callback: function(result) {
-        if (result)
-          $('body').block();
-          $('body').spin('huge');
-          $.rails.confirmed(link, message);
-      }
-    });
-}
+// //Override the default confirm dialog by rails
+// $.rails.allowAction = function(link){
+//   if (link.data("confirm") == undefined){
+//     return true;
+//   }
+//   $.rails.showConfirmationDialog(link);
+//   //return false;
+// }
+// //User click confirm button
+// $.rails.confirmed = function(link, message){
+//   link.data("confirm", null);
+//   link.trigger("click.rails");
+//   link.data("confirm", message);
+// }
+// //Display the confirmation dialog
+// $.rails.showConfirmationDialog = function(link){
+//   var message = link.data("confirm");
+//   bootbox.confirm({
+//       size:    'small',
+//       message:  message,
+//       callback: function(result) {
+//         if (result)
+//           $('body').block();
+//           $('body').spin('huge');
+//           $.rails.confirmed(link, message);
+//       }
+//     });
+// }
