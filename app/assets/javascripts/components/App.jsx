@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './layout/Header.jsx';
+import Header from './layout/Header';
 
 export default React.createClass({
   render() {

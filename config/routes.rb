@@ -14,7 +14,7 @@ Rails.application.routes.draw do
 	match "timer/:session_id/reset",   to: "timer#reset",  via: [:post]
 	match "timer/:session_id/update",  to: "timer#update", via: [:post]
 
-	resources :sessions do
+	resources :sessions, path: "data/sessions" do
 		member do
 			post 'remove_all'
 		end
